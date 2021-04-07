@@ -51,7 +51,7 @@ const queryData = (options) => {
       if (err) {
         reject(err);
       }
-      resolve(data);
+      resolve(data.Items);
     });
   });
 };
