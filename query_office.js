@@ -11,7 +11,7 @@ const getHeaders = (token) => ({
 });
 
 exports.getEventOffice = (options) => {
-  const { timeStart, timeEnd, token } = options;
+  const { timeStart, timeEnd, token, nextLink } = options;
   const paramQuery = {
     startDateTime: moment(timeStart).tz(tz).format("YYYY-MM-DDT[00:00:01]Z"),
     endDateTime: moment(timeEnd)
@@ -26,9 +26,14 @@ exports.getEventOffice = (options) => {
   const query = querystring.stringify(paramQuery);
   return new Promise((resolve, reject) => {
     return axios
-      .get(`${OFFICE_GRAPH_BASE_URL}/me/calendar/calendarView?${query}`, {
-        headers: getHeaders(token),
-      })
+      .get(
+        nextLink
+          ? nextLink
+          : `${OFFICE_GRAPH_BASE_URL}/me/calendar/calendarView?${query}`,
+        {
+          headers: getHeaders(token),
+        }
+      )
       .then((res) => {
         if (res.data["@odata.nextLink"]) {
           return getEventOffice({

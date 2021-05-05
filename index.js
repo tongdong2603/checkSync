@@ -2,6 +2,7 @@ require("dotenv").config();
 const { getEventOffice } = require("./query_office");
 const { getData, queryData } = require("./query_dynamo");
 const { getEventGaroon } = require("./query_garoon");
+const { getEventGoogle } = require("./query_google");
 const moment = require("moment-timezone");
 const {
   TIME_START,
